@@ -1,0 +1,10 @@
+{
+  "name": "record-seller",
+  "version": "0.0.1",
+  "description": "Project",
+  "main": "index.js",
+  "license": "MIT",
+  "devDependencies": {
+    "typescript": "^5.0.3"
+  }
+}
