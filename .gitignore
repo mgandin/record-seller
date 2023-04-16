@@ -66,7 +66,7 @@ profile*
 
 node_modules
 dist
-
-db/.tmp
-db/dev.db
-db/dev.db-journal
+.next
+**/db/.tmp
+**/db/dev.db
+**/db/dev.db-journal
