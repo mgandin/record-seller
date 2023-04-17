@@ -16,8 +16,8 @@ const server: FastifyInstance = fastify({
 // Run the server!
 const start = async () => {
     try {
-        const trainerContainer = initRecordContainer()
-        registerRecordRoutes(server, trainerContainer);
+        const recordContainer = initRecordContainer()
+        registerRecordRoutes(server, recordContainer);
 
         await server.listen({ host: '0.0.0.0', port: process.env.PORT as unknown as number || 3000 })
     } catch (err) {
