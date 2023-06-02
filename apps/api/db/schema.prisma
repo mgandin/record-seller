@@ -14,6 +14,13 @@ model Record {
   id    Int     @id @default(autoincrement())
   name  String
   genre String
-  artist String
   year Int
+  artistId Int?
+  artist Artist? @relation(fields: [artistId], references: [id])
+}
+
+model Artist {
+    id    Int     @id @default(autoincrement())
+    name String
+    records Record[]
 }
