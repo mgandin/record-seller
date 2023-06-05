@@ -1,34 +1,36 @@
 import {afterEach, describe, expect, test, vi} from 'vitest'
-import {SearchRecordsUsecase} from "../../src/domain/search-records.usecase";
-import {Record} from '../../src/domain/record';
+import {SearchAlbumsUsecase} from "../../src/domain/search-albums.usecase";
 
-describe('Find records Usecase - test', () => {
-    const recordRepositoryMock = {
+describe('Find albums Usecase - test', () => {
+    const albumRepositoryMock = {
         findAll: vi.fn()
     }
 
-    const searchRecordUsecase = new SearchRecordsUsecase(recordRepositoryMock)
+    const searchAlbumsUsecase = new SearchAlbumsUsecase(albumRepositoryMock)
 
     afterEach(() => {
         vi.restoreAllMocks()
     })
 
-    test('should find all records ', async () => {
+    test('should find all albums ', async () => {
         // GIVEN
-        const expectedrecord: Record = {
+        const expectedAlbums = [{
             id: 1,
             name: 'Tweez',
             genre: 'post-rock',
-            artist: 'Slint',
+            artist: {
+                id: 1,
+                name: 'Slint'
+            },
             year: 1989
-        }
-        recordRepositoryMock.findAll.mockImplementation(() => [expectedrecord])
+        }];
+        albumRepositoryMock.findAll.mockImplementation(() => expectedAlbums)
 
         // WHEN
-        const records = await searchRecordUsecase.execute()
+        const albums = await searchAlbumsUsecase.execute()
 
         // THEN
-        expect(recordRepositoryMock.findAll).toHaveBeenCalledOnce()
-        expect(records).toStrictEqual([expectedrecord]);
+        expect(albumRepositoryMock.findAll).toHaveBeenCalledOnce()
+        expect(albums).toStrictEqual(expectedAlbums);
     })
 })

@@ -1,4 +1,4 @@
-export type Record = {
+export type Album = {
   id: number,
   name: string,
   genre: string,

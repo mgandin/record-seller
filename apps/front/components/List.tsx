@@ -1,16 +1,16 @@
 import * as React from 'react'
 import ListItem from './ListItem'
-import { Record } from '../interfaces/record'
+import { Album } from '../interfaces/record'
 
 type Props = {
-  records: Record[]
+  albums: Album[]
 }
 
-const List = ({ records }: Props) => (
+const List = ({ albums }: Props) => (
   <ul>
-    {records.map((record) => (
-      <li key={record.id}>
-        <ListItem record={record} />
+    {albums.map((album) => (
+      <li key={album.id}>
+        <ListItem album={album} />
       </li>
     ))}
   </ul>

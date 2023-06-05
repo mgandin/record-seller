@@ -1,23 +1,24 @@
 import {beforeAll, describe, expect, test} from 'vitest'
 import {prisma} from "../../db";
-import {RecordSqlRepository} from "../../src/infrastructure/record.sql.repository";
+import {AlbumSqlRepository} from "../../src/infrastructure/album.sql.repository";
 
-describe('Record Repository - test', () => {
-    const recordRepository = new RecordSqlRepository()
+describe('Album Repository - test', () => {
+    const albumRepository = new AlbumSqlRepository()
 
     beforeAll(async () => {
-        await prisma.record.deleteMany()
+        await prisma.albumSqlModel.deleteMany()
+        await prisma.artistSqlModel.deleteMany()
     })
 
     test('#findall', async () => {
         // GIVEN
 
-        const insertedArtist = await prisma.artist.create({
+        const insertedArtist = await prisma.artistSqlModel.create({
           data: {
             name: 'Slint'
           }
         })
-        const insertedRecord = await prisma.record.create({
+        const insertedAlbum = await prisma.albumSqlModel.create({
           data: {
             name: 'Tweez',
             genre: 'post-rock',
@@ -25,8 +26,8 @@ describe('Record Repository - test', () => {
             artistId: insertedArtist.id
           },
         });
-        const expectedrecord = [{
-          id: insertedRecord.id,
+        const expectedAlbum = [{
+          id: insertedAlbum.id,
           name: 'Tweez',
           genre: 'post-rock',
           year: 1989,
@@ -37,9 +38,9 @@ describe('Record Repository - test', () => {
         }];
 
         // WHEN
-        const records = await recordRepository.findAll()
+        const albums = await albumRepository.findAll()
 
         // THEN
-        expect(records).toEqual(expectedrecord);
+        expect(albums).toEqual(expectedAlbum);
     })
 })
