@@ -1,6 +1,6 @@
-import {beforeAll, describe, expect, test} from 'vitest'
-import {prisma} from "../../db";
-import {AlbumSqlRepository} from "../../src/infrastructure/album.sql.repository";
+import { beforeAll, describe, expect, test } from 'vitest'
+import { prisma } from "../../db";
+import { AlbumSqlRepository } from "../../src/infrastructure/album.sql.repository";
 
 describe('Album Repository - test', () => {
     const albumRepository = new AlbumSqlRepository()

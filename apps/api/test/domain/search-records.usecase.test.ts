@@ -1,5 +1,5 @@
-import {afterEach, describe, expect, test, vi} from 'vitest'
-import {SearchAlbumsUsecase} from "../../src/domain/search-albums.usecase";
+import { afterEach, describe, expect, test, vi } from 'vitest'
+import { SearchAlbumsUsecase } from "../../src/domain/search-albums.usecase";
 
 describe('Find albums Usecase - test', () => {
     const albumRepositoryMock = {
@@ -27,7 +27,7 @@ describe('Find albums Usecase - test', () => {
         albumRepositoryMock.findAll.mockImplementation(() => expectedAlbums)
 
         // WHEN
-        const albums = await searchAlbumsUsecase.execute()
+        const albums = await searchAlbumsUsecase.query()
 
         // THEN
         expect(albumRepositoryMock.findAll).toHaveBeenCalledOnce()
