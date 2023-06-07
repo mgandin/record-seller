@@ -1,5 +1,5 @@
-import {AlbumRepository} from "./album.repository";
-import {Album} from "./album";
+import { AlbumRepository } from "./album.repository";
+import { Album } from "./album";
 
 export class AddAlbumUsecase {
   private albumRepository: AlbumRepository;
