@@ -1,15 +1,15 @@
 import * as React from 'react'
 
-import { Record } from '../interfaces/record'
+import { Album } from '../interfaces/record'
 
 type ListDetailProps = {
-  record: Record
+  album: Album
 }
 
-const ListDetail = ({ record: record }: ListDetailProps) => (
+const ListDetail = ({ album: Album }: ListDetailProps) => (
   <div>
-    <h1>Detail for {record.name}</h1>
-    <p>ID: {record.id}</p>
+    <h1>Detail for {Album.name}</h1>
+    <p>ID: {Album.id}</p>
   </div>
 )
 

@@ -1,15 +1,15 @@
 import React from 'react'
 import Link from 'next/link'
 
-import { Record } from '../interfaces/record'
+import { Album } from '../interfaces/record'
 
 type Props = {
-  record: Record
+  album: Album
 }
 
-const ListItem = ({ record }: Props) => (
-  <Link href="/record/[id]" as={`/record/${record.id}`}>
-    {record.id}:{record.name}
+const ListItem = ({ album }: Props) => (
+  <Link href="/record/[id]" as={`/record/${album.id}`}>
+    {album.id}:{album.name}
   </Link>
 )
 

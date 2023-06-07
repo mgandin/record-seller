@@ -10,10 +10,19 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Record {
+model AlbumSqlModel {
   id    Int     @id @default(autoincrement())
   name  String
   genre String
-  artist String
   year Int
+  artistId Int?
+  artist ArtistSqlModel? @relation(fields: [artistId], references: [id])
+  @@map("Album")
+}
+
+model ArtistSqlModel {
+  id    Int     @id @default(autoincrement())
+  name String
+  albums AlbumSqlModel[]
+  @@map("Artist")
 }

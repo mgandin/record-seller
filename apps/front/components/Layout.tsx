@@ -17,8 +17,8 @@ const Layout = ({ children, title = 'This is the default title' }: Props) => (
     <header>
       <nav>
         <Link href="/">Record Seller</Link> | <Link href="/about">About</Link> |{' '}
-        <Link href="/records">Record List</Link> |{' '}
-        <a href="/api/records">Record API</a>
+        <Link href="/albums">Record List</Link> |{' '}
+        <a href="/api/albums">Record API</a>
       </nav>
     </header>
     {children}
