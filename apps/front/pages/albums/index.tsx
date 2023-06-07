@@ -1,15 +1,14 @@
-import Link from 'next/link'
+import Link from "next/link";
 
-import { Album } from '../../interfaces/record'
-import Layout from '../../components/Layout'
-import List from '../../components/List'
-import type { GetServerSideProps } from 'next';
-import { apiHttpClient } from '../../utils/constant'
-
+import { Album } from "../../interfaces/record";
+import Layout from "../../components/Layout";
+import List from "../../components/List";
+import type { GetServerSideProps } from "next";
+import { apiHttpClient } from "../../utils/constant";
 
 type Props = {
-  albums: Album[]
-}
+  albums: Album[];
+};
 
 const WithStaticProps = ({ albums }: Props) => (
   <Layout title="Records List">
@@ -19,11 +18,11 @@ const WithStaticProps = ({ albums }: Props) => (
       <Link href="/">Go home</Link>
     </p>
   </Layout>
-)
+);
 
 export const getServerSideProps: GetServerSideProps<Props> = async () => {
-  const albums: Album[] = await apiHttpClient.get('/albums');
-  return { props: { albums } }
-}
+  const albums: Album[] = await apiHttpClient.get("/albums");
+  return { props: { albums } };
+};
 
-export default WithStaticProps
+export default WithStaticProps;

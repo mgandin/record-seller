@@ -1,7 +1,7 @@
 import { Nullable, Optional } from "./type";
 
-const DISPOSITION_FILENAME_KEY = 'filename=';
-const DISPOSITION_TYPE_ATTACHMENT = 'attachment';
+const DISPOSITION_FILENAME_KEY = "filename=";
+const DISPOSITION_TYPE_ATTACHMENT = "attachment";
 
 export type ApiError = {
   code: string;
@@ -34,14 +34,14 @@ export const HTTP_STATUS_CODE_UNPROCESSABLE_ENTITY = 422;
 
 export class HttpClient {
   constructor(
-    private readonly defaultBaseUrl: string = '',
+    private readonly defaultBaseUrl: string = "",
     private readonly defaultConfigHeaders: HeadersInit = {},
-    private readonly log: boolean = false,
+    private readonly log: boolean = false
   ) {}
 
   private async request<ResponseType = undefined>(
     url: string,
-    config: RequestInit,
+    config: RequestInit
   ): Promise<ResponseType> {
     const requestInit: RequestInit = {
       ...config,
@@ -66,16 +66,23 @@ export class HttpClient {
                   message: response.statusText,
                   ...responseJson,
                 },
-              },
+              }
         );
       }
 
-      const disposition = response.headers.get('content-disposition');
+      const disposition = response.headers.get("content-disposition");
       if (disposition) {
-        const [dispositionType, dispositionFilename] = disposition.split(';');
-        if (dispositionType === DISPOSITION_TYPE_ATTACHMENT && dispositionFilename) {
-          const [, filename] = dispositionFilename.split(DISPOSITION_FILENAME_KEY);
-          const data = Buffer.from(new Uint8Array(await response.arrayBuffer()));
+        const [dispositionType, dispositionFilename] = disposition.split(";");
+        if (
+          dispositionType === DISPOSITION_TYPE_ATTACHMENT &&
+          dispositionFilename
+        ) {
+          const [, filename] = dispositionFilename.split(
+            DISPOSITION_FILENAME_KEY
+          );
+          const data = Buffer.from(
+            new Uint8Array(await response.arrayBuffer())
+          );
 
           return Promise.resolve({
             data,
@@ -90,32 +97,37 @@ export class HttpClient {
 
       return Promise.resolve(undefined) as Promise<ResponseType>; // => undefined
     } catch (err) {
-
       return Promise.reject({
         error: {
           status: HTTP_STATUS_CODE_INTERNAL_SERVER_ERROR,
-          message: 'Internal Server Error',
+          message: "Internal Server Error",
         },
       });
     }
   }
 
-  public async delete<ResponseType = undefined>(url: string, config: RequestInit = {}) {
-    return this.request<ResponseType>(url, { ...config, method: 'DELETE' });
+  public async delete<ResponseType = undefined>(
+    url: string,
+    config: RequestInit = {}
+  ) {
+    return this.request<ResponseType>(url, { ...config, method: "DELETE" });
   }
 
-  public async get<ResponseType = undefined>(url: string, config: RequestInit = {}) {
-    return this.request<ResponseType>(url, { ...config, method: 'GET' });
+  public async get<ResponseType = undefined>(
+    url: string,
+    config: RequestInit = {}
+  ) {
+    return this.request<ResponseType>(url, { ...config, method: "GET" });
   }
 
   public async patch<BodyType, ResponseType = undefined>(
     url: string,
     body: BodyType,
-    config: RequestInit = {},
+    config: RequestInit = {}
   ) {
     return this.request<ResponseType>(url, {
       ...config,
-      method: 'PATCH',
+      method: "PATCH",
       body: JSON.stringify(body),
     });
   }
@@ -123,11 +135,11 @@ export class HttpClient {
   public async post<BodyType, ResponseType = undefined>(
     url: string,
     body: BodyType,
-    config: RequestInit = {},
+    config: RequestInit = {}
   ) {
     return this.request<ResponseType>(url, {
       ...config,
-      method: 'POST',
+      method: "POST",
       body: JSON.stringify(body),
     });
   }
@@ -135,16 +147,18 @@ export class HttpClient {
   public async put<BodyType, ResponseType = undefined>(
     url: string,
     body: BodyType,
-    config: RequestInit = {},
+    config: RequestInit = {}
   ) {
     return this.request<ResponseType>(url, {
       ...config,
-      method: 'PUT',
+      method: "PUT",
       body: JSON.stringify(body),
     });
   }
 }
 
-export function isHttpError<T>(response: HttpResponse<T>): response is HttpError {
-  return typeof (response as HttpError)?.error !== 'undefined';
+export function isHttpError<T>(
+  response: HttpResponse<T>
+): response is HttpError {
+  return typeof (response as HttpError)?.error !== "undefined";
 }

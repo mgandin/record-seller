@@ -1,10 +1,10 @@
-import * as React from 'react'
-import ListItem from './ListItem'
-import { Album } from '../interfaces/record'
+import * as React from "react";
+import ListItem from "./ListItem";
+import { Album } from "../interfaces/record";
 
 type Props = {
-  albums: Album[]
-}
+  albums: Album[];
+};
 
 const List = ({ albums }: Props) => (
   <ul>
@@ -14,6 +14,6 @@ const List = ({ albums }: Props) => (
       </li>
     ))}
   </ul>
-)
+);
 
-export default List
+export default List;

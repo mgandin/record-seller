@@ -2,13 +2,13 @@ import { Album } from "./album";
 import { AlbumRepository } from "./album.repository";
 
 export class SearchAlbumsUsecase {
-    private albumRepository: AlbumRepository;
+  private albumRepository: AlbumRepository;
 
-    constructor(albumRepository: AlbumRepository) {
-        this.albumRepository = albumRepository;
-    }
+  constructor(albumRepository: AlbumRepository) {
+    this.albumRepository = albumRepository;
+  }
 
-    async query(): Promise<Album[]> {
-        return await this.albumRepository.findAll();
-    }
+  async query(): Promise<Album[]> {
+    return await this.albumRepository.findAll();
+  }
 }
