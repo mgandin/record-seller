@@ -64,6 +64,7 @@ profile*
 
 **/node_modules/**
 
+*.crt
 .env
 node_modules
 dist
