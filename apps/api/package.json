@@ -17,6 +17,7 @@
     "test": "vitest"
   },
   "dependencies": {
+    "@elastic/elasticsearch": "^8.8.0",
     "@prisma/client": "4.8.1",
     "fastify": "^4.11.0"
   },
