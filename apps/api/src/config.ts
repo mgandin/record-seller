@@ -8,8 +8,10 @@ export type Config = {
   ELASTIC_CA_FILE: string;
 };
 
-export const buildConfig = (): Config => {
+const buildConfig = (): Config => {
   const { parsed } = dotenv.config();
   if (!parsed) throw new Error(".env file is missing or empty");
   return parsed as Config;
 };
+
+export const config = buildConfig();

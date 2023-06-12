@@ -3,12 +3,11 @@ import { Album } from "../../src/domain/album";
 import { Client } from "@elastic/elasticsearch";
 import * as fs from "fs";
 import { AlbumElasticSearchRepository } from "../../src/infrastructure/album.es.repository";
-import { buildConfig } from "../../src/config";
+import { config } from "../../src/config";
 
 describe("Album Elastic Search Repository - test", () => {
   test("#index and search", async () => {
     // Given
-    const config = buildConfig();
     const album: Album = {
       id: 1,
       name: "Tweez",
