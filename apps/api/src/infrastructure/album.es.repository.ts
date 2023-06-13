@@ -12,15 +12,19 @@ export class AlbumElasticSearchRepository implements AlbumRepository {
   }
 
   async findByName(name: string): Promise<Album | null> {
-    const results = await this.client.search<Album>({
-      index: "albums",
-      query: {
-        match: {
-          name,
+    try {
+      const results = await this.client.search<Album>({
+        index: "albums",
+        query: {
+          match: {
+            name,
+          },
         },
-      },
-    });
-    return results.hits.hits[0]._source ?? null;
+      });
+      return results.hits.hits[0]._source ?? null;
+    } catch (error) {
+      return null;
+    }
   }
 
   async save(album: Album): Promise<Album | null> {

@@ -42,5 +42,14 @@ describe("Album Elastic Search Repository - test", () => {
       album.name
     );
     expect(albumSearched).toStrictEqual(album);
+
+    await client.deleteByQuery({
+      index: "albums",
+      query: {
+        match: {
+          name: album.name,
+        },
+      },
+    });
   });
 });

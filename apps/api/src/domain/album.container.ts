@@ -7,9 +7,11 @@ import { Client } from "@elastic/elasticsearch";
 import { config } from "../config";
 import fs from "fs";
 import { AlbumIndexedRepository } from "../infrastructure/album.indexed.repository";
+import { SearchAlbumUsecase } from "./search-album.usecase";
 
 export type AlbumContainer = {
-  searchRecordsUsecase: SearchAlbumsUsecase;
+  searchAlbumsUsecase: SearchAlbumsUsecase;
+  searchAlbumUsecase: SearchAlbumUsecase;
   addAlbumUsecase: AddAlbumUsecase;
 };
 
@@ -31,12 +33,16 @@ export const initAlbumContainer = (): AlbumContainer => {
     albumSqlRepository,
     albumElasticSearchRepository
   );
-  const searchRecordsUsecase: SearchAlbumsUsecase = new SearchAlbumsUsecase(
+  const searchAlbumsUsecase: SearchAlbumsUsecase = new SearchAlbumsUsecase(
+    albumRepository
+  );
+  const searchAlbumUsecase: SearchAlbumUsecase = new SearchAlbumUsecase(
     albumRepository
   );
   const addAlbumUsecase: AddAlbumUsecase = new AddAlbumUsecase(albumRepository);
   return {
-    searchRecordsUsecase,
+    searchAlbumsUsecase,
+    searchAlbumUsecase,
     addAlbumUsecase,
   };
 };

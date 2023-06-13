@@ -11,7 +11,7 @@ export class AlbumIndexedRepository implements AlbumRepository {
   ) {}
 
   async findAll(): Promise<Album[]> {
-    return this.albumElasticSearchRepository.findAll();
+    return this.albumSqlRepository.findAll();
   }
 
   async findByName(name: string): Promise<Album | null> {
