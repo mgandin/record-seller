@@ -5,7 +5,7 @@ describe("Find albums Usecase - test", () => {
   const albumRepositoryMock = {
     save: vi.fn(),
     findAll: vi.fn(),
-    findById: vi.fn(),
+    findByName: vi.fn(),
   };
 
   const searchAlbumsUsecase = new SearchAlbumsUsecase(albumRepositoryMock);

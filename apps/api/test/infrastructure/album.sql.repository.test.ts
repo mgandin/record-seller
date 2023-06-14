@@ -2,7 +2,7 @@ import { beforeAll, describe, expect, test } from "vitest";
 import { prisma } from "../../db";
 import { AlbumSqlRepository } from "../../src/infrastructure/album.sql.repository";
 
-describe("Album Repository - test", () => {
+describe("Album SQL Repository - test", () => {
   const albumRepository = new AlbumSqlRepository();
 
   beforeAll(async () => {

@@ -1,7 +1,9 @@
-import { FastifyInstance } from "fastify";
+import { FastifyInstance, FastifyRequest } from "fastify";
 import { AlbumContainer } from "../domain/album.container";
 import { Album } from "../domain/album";
-
+type AlbumRequest = FastifyRequest<{
+  Querystring: { name: string };
+}>;
 export const registerAlbumRoutes = (
   server: FastifyInstance,
   container: AlbumContainer
@@ -10,7 +12,17 @@ export const registerAlbumRoutes = (
     method: "GET",
     url: "/albums",
     handler: async (_request, reply) => {
-      const albums = await container.searchRecordsUsecase.query();
+      const albums = await container.searchAlbumsUsecase.query();
+      reply.status(200).send(albums);
+    },
+  });
+
+  server.route({
+    method: "GET",
+    url: "/album",
+    handler: async (_request: AlbumRequest, reply) => {
+      const { name } = _request.query;
+      const albums = await container.searchAlbumUsecase.query(name);
       reply.status(200).send(albums);
     },
   });
@@ -20,7 +32,6 @@ export const registerAlbumRoutes = (
     url: "/album",
     handler: async (_request, reply) => {
       const body = _request.body as Album;
-      console.log(body);
       const album = await container.addAlbumUsecase.command(body);
       reply.status(200).send(album);
     },
