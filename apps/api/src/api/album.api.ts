@@ -1,5 +1,5 @@
 import { FastifyInstance, FastifyRequest } from "fastify";
-import { AlbumContainer } from "../domain/album.container";
+import { AlbumContainer } from "../album.container";
 import { Album } from "../domain/album";
 type AlbumRequest = FastifyRequest<{
   Querystring: { name: string };

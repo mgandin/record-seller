@@ -1,43 +1,46 @@
 import { beforeAll, describe, expect, test } from "vitest";
-import { prisma } from "../../db";
 import { AlbumSqlRepository } from "../../src/infrastructure/album.sql.repository";
+import { ArtistSqlModel, PrismaClient } from "@prisma/client";
+import { DeepMockProxy, mockDeep, mockReset } from "vitest-mock-extended";
+import { AlbumSqlModel } from ".prisma/client";
 
 describe("Album SQL Repository - test", () => {
-  const albumRepository = new AlbumSqlRepository();
+  const prismaMock: DeepMockProxy<PrismaClient> = mockDeep<PrismaClient>();
+  const albumRepository = new AlbumSqlRepository(prismaMock);
 
-  beforeAll(async () => {
-    await prisma.albumSqlModel.deleteMany();
-    await prisma.artistSqlModel.deleteMany();
+  beforeAll(() => {
+    mockReset(prismaMock);
   });
 
   test("#findall", async () => {
     // GIVEN
-
-    const insertedArtist = await prisma.artistSqlModel.create({
-      data: {
-        name: "Slint",
-      },
-    });
-    const insertedAlbum = await prisma.albumSqlModel.create({
-      data: {
-        name: "Tweez",
-        genre: "post-rock",
-        year: 1989,
-        artistId: insertedArtist.id,
-      },
-    });
     const expectedAlbum = [
       {
-        id: insertedAlbum.id,
+        id: 1,
         name: "Tweez",
         genre: "post-rock",
         year: 1989,
         artist: {
-          id: insertedArtist.id,
+          id: 1,
           name: "Slint",
         },
       },
     ];
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    prismaMock.albumSqlModel.findMany.mockResolvedValue([
+      {
+        id: 1,
+        name: "Tweez",
+        genre: "post-rock",
+        year: 1989,
+        artistId: 1,
+        artist: {
+          id: 1,
+          name: "Slint",
+        },
+      } as AlbumSqlModel & { artist: ArtistSqlModel },
+    ]);
 
     // WHEN
     const albums = await albumRepository.findAll();

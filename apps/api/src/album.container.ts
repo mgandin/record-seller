@@ -1,13 +1,14 @@
-import { AlbumSqlRepository } from "../infrastructure/album.sql.repository";
-import { AlbumRepository } from "./album.repository";
-import { SearchAlbumsUsecase } from "./search-albums.usecase";
-import { AddAlbumUsecase } from "./add-album.usecase";
-import { AlbumElasticSearchRepository } from "../infrastructure/album.es.repository";
+import { AlbumSqlRepository } from "./infrastructure/album.sql.repository";
+import { AlbumRepository } from "./domain/album.repository";
+import { SearchAlbumsUsecase } from "./domain/search-albums.usecase";
+import { AddAlbumUsecase } from "./domain/add-album.usecase";
+import { AlbumElasticSearchRepository } from "./infrastructure/album.es.repository";
 import { Client } from "@elastic/elasticsearch";
-import { config } from "../config";
+import { config } from "./config";
 import fs from "fs";
-import { AlbumIndexedRepository } from "../infrastructure/album.indexed.repository";
-import { SearchAlbumUsecase } from "./search-album.usecase";
+import { AlbumIndexedRepository } from "./infrastructure/album.indexed.repository";
+import { SearchAlbumUsecase } from "./domain/search-album.usecase";
+import { prisma } from "../db";
 
 export type AlbumContainer = {
   searchAlbumsUsecase: SearchAlbumsUsecase;
@@ -16,7 +17,7 @@ export type AlbumContainer = {
 };
 
 export const initAlbumContainer = (): AlbumContainer => {
-  const albumSqlRepository: AlbumRepository = new AlbumSqlRepository();
+  const albumSqlRepository: AlbumRepository = new AlbumSqlRepository(prisma);
   const client = new Client({
     node: config.ES_URL,
     auth: {
