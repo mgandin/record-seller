@@ -1,6 +1,6 @@
 import fastify, { FastifyInstance } from "fastify";
 import { registerAlbumRoutes } from "./api/album.api";
-import { initAlbumContainer } from "./domain/album.container";
+import { initAlbumContainer } from "./album.container";
 
 const server: FastifyInstance = fastify({
   logger: {

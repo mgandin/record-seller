@@ -1,10 +1,12 @@
 import { AlbumRepository } from "../domain/album.repository";
-import { prisma } from "../../db";
 import { Album } from "../domain/album";
+import { PrismaClient } from "@prisma/client";
 
 export class AlbumSqlRepository implements AlbumRepository {
+  constructor(private prisma: PrismaClient) {}
+
   async findAll(): Promise<Album[]> {
-    const albums = await prisma.albumSqlModel.findMany({
+    const albums = await this.prisma.albumSqlModel.findMany({
       include: {
         artist: true,
       },
@@ -22,7 +24,7 @@ export class AlbumSqlRepository implements AlbumRepository {
   }
 
   async findById(id: number): Promise<Album | null> {
-    const album = await prisma.albumSqlModel.findUnique({
+    const album = await this.prisma.albumSqlModel.findUnique({
       where: {
         id,
       },
@@ -42,7 +44,7 @@ export class AlbumSqlRepository implements AlbumRepository {
   }
 
   async findByName(name: string): Promise<Album | null> {
-    const album = await prisma.albumSqlModel.findFirst({
+    const album = await this.prisma.albumSqlModel.findFirst({
       where: {
         name,
       },
@@ -62,7 +64,7 @@ export class AlbumSqlRepository implements AlbumRepository {
   }
 
   async save(album: Album): Promise<Album | null> {
-    const albumSaved = await prisma.albumSqlModel.create({
+    const albumSaved = await this.prisma.albumSqlModel.create({
       data: {
         name: album.name,
         genre: album.genre,
